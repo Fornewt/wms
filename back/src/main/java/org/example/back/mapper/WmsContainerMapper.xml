@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.back.mapper.WmsContainerMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.example.back.domain.WmsContainer">
+        <id column="id" property="id" />
+        <result column="item_no" property="itemNo" />
+        <result column="supplier" property="supplier" />
+        <result column="containerCode" property="containerCode" />
+        <result column="container" property="container" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, item_no, supplier, containerCode, container
+    </sql>
+
+</mapper>
