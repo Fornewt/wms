@@ -22,15 +22,16 @@ public class InboundServiceImpl {
     public Map<String, Object> storeInboundOrder(InboundReq request){
         WmsInbound wmsInbound = request.getWmsInbound();
         List<WmsInboundDetail> details = request.getWmsInboundDetailList();
-
+        // 刚入库，状态肯定为“未入库”，即0
+        wmsInbound.setInboundStatus(0);
         // 保存入库单
         wmsInboundMapper.insert(wmsInbound);
-        // 测试
-        System.out.println("Inserting detail: " + wmsInbound);
 
         // 保存入库单明细
         for(WmsInboundDetail detail : details){
-//            detail.setInboundId(wmsInbound.getId()); 即保证每一条detail的inboudId都是对应的Inboud的id，这个可以在前端保证
+            detail.setInboundId(wmsInbound.getId());
+            detail.setInboundNo(wmsInbound.getId());
+            detail.setRealQuantity(0);// 实际数量初始化为0
             wmsInboundDetailMapper.insert(detail);
 
         }

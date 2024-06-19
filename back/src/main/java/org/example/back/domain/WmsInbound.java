@@ -24,7 +24,7 @@ public class WmsInbound implements Serializable {
     private String inboundNo;
 
     @TableField("inbound_status")
-    private Integer inboundStatus;
+    private Integer inboundStatus ;
 
     @TableField("inbound_time")
     private String inboundTime;
