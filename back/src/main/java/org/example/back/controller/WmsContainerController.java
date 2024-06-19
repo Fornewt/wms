@@ -1,9 +1,12 @@
 package org.example.back.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.example.back.domain.WmsContainer;
+import org.example.back.service.WmsContainerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 /**
  * <p>
@@ -16,6 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/wmsContainer")
 public class WmsContainerController {
+
+    @Autowired
+    private WmsContainerService wmsContainerService;
+
+    @GetMapping("/containerCount")
+    public List<Integer> getContainerCount(@RequestBody WmsContainer wmsContainer) {
+        String itemNo=wmsContainer.getItemNo();
+        String supplier=wmsContainer.getSupplier();
+        return wmsContainerService.getDistinctContainerCount(itemNo, supplier);
+    }
 
 }
 
