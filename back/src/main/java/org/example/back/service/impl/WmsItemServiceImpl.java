@@ -1,5 +1,6 @@
 package org.example.back.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.example.back.domain.WmsItem;
 import org.example.back.mapper.WmsItemMapper;
 import org.example.back.service.WmsItemService;
@@ -53,5 +54,11 @@ public class WmsItemServiceImpl extends ServiceImpl<WmsItemMapper, WmsItem> impl
         } else {
             itemMapper.updateById(item);
         }
+    }
+    @Override
+    public List<WmsItem> getItemsBySupplier(String supplier){
+        QueryWrapper<WmsItem> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("supplier", supplier); // 设置查询条件为 supplier = 'su001'
+        return itemMapper.selectList(queryWrapper); // 执行查询并返回结果
     }
 }

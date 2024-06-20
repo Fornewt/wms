@@ -21,4 +21,5 @@ public interface WmsItemService extends IService<WmsItem> {
     void deleteItem(Long id);
     void saveOrUpdateItem(WmsItem item); // 添加 saveOrUpdateItem 方法
 
+    List<WmsItem> getItemsBySupplier(String supplier);
 }
