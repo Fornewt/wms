@@ -25,11 +25,19 @@ public class WmsItemController {
     @Autowired
     private WmsItemService itemService;
 
-    @ApiOperation(value = "获取所有物料", notes = "返回所有物料的列表")
-    @GetMapping
-    public List<WmsItem> getAllItems() {
-        return itemService.getAllItems();
+//    @ApiOperation(value = "获取所有物料", notes = "返回所有物料的列表")
+//    @GetMapping
+//    public List<WmsItem> getAllItems() {
+//        return itemService.getAllItems();
+//    }
+
+    //根据供货商编号来查找对应售卖的所有零件
+    @PostMapping("/getItems")
+    public List<WmsItem> getItemsBySupplier(@RequestParam String supplier) {
+        //返回给前端渲染零件表
+        return itemService.getItemsBySupplier(supplier);
     }
+
 
     @ApiOperation(value = "通过ID获取物料", notes = "根据ID获取物料的详细信息")
     @GetMapping("/{id}")

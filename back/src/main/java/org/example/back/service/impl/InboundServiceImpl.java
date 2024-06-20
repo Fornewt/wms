@@ -43,4 +43,10 @@ public class InboundServiceImpl {
 
     }
 
+    //返回所有的入库单
+    public List<WmsInbound> getWmsInbound() {
+        return wmsInboundMapper.selectList(null);
+    }
+
+
 }
