@@ -26,5 +26,19 @@ public class WmsSupplierServiceImpl extends ServiceImpl<WmsSupplierMapper, WmsSu
 
     public List<String> getSupplierName(){
         return wmsSupplierMapper.selectSupplierName();
+    @Autowired
+    private WmsSupplierMapper wmsSupplierMapper;
+
+    public List<String> getAllSupplierNames() {
+        QueryWrapper<WmsSupplier> queryWrapper = new QueryWrapper<>();
+        List<WmsSupplier> suppliers = wmsSupplierMapper.selectList(queryWrapper);
+        return suppliers.stream().map(WmsSupplier::getName).collect(Collectors.toList());
+    }
+    @Override
+    public String getSupplierIdByName(String supplierName) {
+        QueryWrapper<WmsSupplier> queryWrapper = new QueryWrapper<>();git 
+        queryWrapper.eq("supplierName", supplierName);
+        WmsSupplier supplier = getOne(queryWrapper);
+        return supplier != null ? supplier.getId() : null;
     }
 }

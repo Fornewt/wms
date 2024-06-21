@@ -45,7 +45,7 @@ public class SysUser implements Serializable {// 继承使该类可以序列化
     private LocalDateTime updateTime;
 
     @TableField("update_by")
-    private LocalDateTime updateBy;
+    private String updateBy;
 
 
 }

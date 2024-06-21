@@ -22,6 +22,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
         queryWrapper.eq("user_name",userName); // 构建查询条件 WHERE user_name = userName
         SysUser sysUser = sysUserMapper.selectOne(queryWrapper); // 使用该查询条件来查询数据库
         Map<String,Object> data = new HashMap<>(); // 用于打印查询结果信息
+        System.out.println(sysUser.getPassword());
         if(sysUser.getPassword().equals(password)){
             data.put("httpCode",200);
             data.put("data",sysUser);

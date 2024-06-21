@@ -24,9 +24,7 @@ public class WmsContainerController {
     private WmsContainerService wmsContainerService;
 
     @GetMapping("/containerCount")
-    public List<Integer> getContainerCount(@RequestBody WmsContainer wmsContainer) {
-        String itemNo=wmsContainer.getItemNo();
-        String supplier=wmsContainer.getSupplier();
+    public List<Integer> getContainerCount(@RequestParam String itemNo, @RequestParam String supplier) {
         return wmsContainerService.getDistinctContainerCount(itemNo, supplier);
     }
 

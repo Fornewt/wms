@@ -61,4 +61,10 @@ public class WmsItemServiceImpl extends ServiceImpl<WmsItemMapper, WmsItem> impl
         queryWrapper.eq("supplier", supplier); // 设置查询条件为 supplier = 'su001'
         return itemMapper.selectList(queryWrapper); // 执行查询并返回结果
     }
+    public List<WmsItem> getItemsBySupplierId(String supplierId) {
+        QueryWrapper<WmsItem> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("supplier", supplierId);
+        return list(queryWrapper);
+    }
+
 }

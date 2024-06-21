@@ -56,5 +56,10 @@ public class WmsItemController {
     public void deleteItem(@PathVariable Long id) {
         itemService.deleteItem(id);
     }
+
+    @GetMapping("/itemsBySupplier")
+    public List<WmsItem> getItemsBySupplier(@RequestParam String supplierId) {
+        return itemService.getItemsBySupplierId(supplierId);
+    }
 }
 
