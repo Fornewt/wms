@@ -1,7 +1,7 @@
 # wms back
 这里是项目的后端
 
-# 系统环境
+# 运行环境
 
 jdk18
 
@@ -19,12 +19,19 @@ maven 3.9.6 参考安装教程：[链接](https://blog.csdn.net/m0_63684495/arti
 
 ## 2.修改数据库配置
 
-![image-20240618145548255](https://cdn.jsdelivr.net/gh/Fornewt/Picture@master/image-20240618145548255.png)
+![](https://cdn.jsdelivr.net/gh/Fornewt/Picture@master/image-20240618145548255.png)
 
-注意修改成你的端口号，用户名和密码
+![image-20240621233403353](https://cdn.jsdelivr.net/gh/Fornewt/Picture@master/image-20240621233403353.png)
+
+设置环境变量MYSQL_USERNAME和MYSQL_PWD   这样数据库的用户名和密码不需要每次都更改
+
+有需要，可以只修改端口号
 
 
 
 ## 3.运行BackApplication
 
 注意后端端口为8000
+
+
+
