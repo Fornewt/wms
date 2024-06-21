@@ -1,11 +1,9 @@
 package org.example.back.controller;
 
 
-<<<<<<< HEAD
+
 import org.example.back.domain.WmsSupplier;
 import org.example.back.mapper.WmsSupplierMapper;
-=======
->>>>>>> b3ff0e3 (ljdAPI)
 import org.example.back.service.WmsSupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
