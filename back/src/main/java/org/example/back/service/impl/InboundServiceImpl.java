@@ -21,6 +21,13 @@ public class InboundServiceImpl {
 
     public Map<String, Object> storeInboundOrder(InboundReq request){
         WmsInbound wmsInbound = request.getWmsInbound();
+        // 获取入库单id，并且查询是否表中已经有重复
+        String ibId = wmsInbound.getId();
+        // 获取表中相同id的记录数
+        Integer count = wmsInboundMapper.countByIbId(ibId);
+        // 返回用
+        Map<String, Object> result = new HashMap<>();
+        if(count == 0){
         List<WmsInboundDetail> details = request.getWmsInboundDetailList();
         // 刚入库，状态肯定为“未入库”，即0
         wmsInbound.setInboundStatus(0);
@@ -28,19 +35,19 @@ public class InboundServiceImpl {
         wmsInboundMapper.insert(wmsInbound);
 
         // 保存入库单明细
-        for(WmsInboundDetail detail : details){
+        for(WmsInboundDetail detail : details) {
             detail.setInboundId(wmsInbound.getId());
             detail.setInboundNo(wmsInbound.getId());
             detail.setRealQuantity(0);// 实际数量初始化为0
             wmsInboundDetailMapper.insert(detail);
 
         }
-
-        // 返回
-        Map<String, Object> result = new HashMap<>();
         result.put("入库单保存成功", true);
-        return result;
 
+        }else{
+            result.put("入库单id重复","请重试!");
+        }
+        return result;
     }
 
     //返回所有的入库单
