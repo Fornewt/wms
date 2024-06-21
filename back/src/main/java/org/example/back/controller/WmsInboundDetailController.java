@@ -1,6 +1,7 @@
 package org.example.back.controller;
 
 
+import org.apache.ibatis.annotations.Delete;
 import org.example.back.domain.SysUser;
 import org.example.back.domain.WmsInbound;
 import org.example.back.domain.WmsInboundDetail;
@@ -34,13 +35,18 @@ public class WmsInboundDetailController {
     }
 
     @PostMapping("/addRealQuantity")
-    // 这个函数有待更改
     public Map<String, Object> addRealQuantity(@RequestParam("ibdId") String ibdId,@RequestParam("quantity") int quantity){
         System.out.println(ibdId);
         System.out.println(quantity);
         return wmsInboundDetailService.addRealQuantity(ibdId,quantity);
 
     }
+
+    @DeleteMapping("/deleteDetailById")
+    public void deleteDetailById(@RequestParam("ibdId") String ibdId){
+        wmsInboundDetailService.deleteDetailById(ibdId);
+    }
+
 
 }
 

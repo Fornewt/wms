@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2024-06-16
  */
 public interface WmsInboundService extends IService<WmsInbound> {
-
+    public void deleteInboundById(String id);
 }
