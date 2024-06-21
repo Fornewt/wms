@@ -1,5 +1,6 @@
 package org.example.back.mapper;
 
+import org.apache.ibatis.annotations.Select;
 import org.example.back.domain.WmsInbound;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -12,5 +13,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2024-06-16
  */
 public interface WmsInboundMapper extends BaseMapper<WmsInbound> {
+@Select("SELECT COUNT(*) FROM wms_inbound where id = #{ibId}")
+Integer countByIbId(String ibId);
+
 
 }
