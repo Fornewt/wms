@@ -15,6 +15,8 @@ public class SysUserController {
     public Map<String,Object> login(@RequestBody SysUser data){// 从http请求体中读取json文件并转换成SysUser对象
         String userName = data.getUserName();
         String password = data.getPassword();
+        System.out.println(userName);
+        System.out.println(password);
         System.out.println("nihao");
         return sysUserService.login(userName,password);
 

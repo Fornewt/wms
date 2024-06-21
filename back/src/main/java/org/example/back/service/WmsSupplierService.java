@@ -15,5 +15,8 @@ import java.util.List;
  */
 public interface WmsSupplierService extends IService<WmsSupplier> {
     public List<String > getSupplierName();
+    List<String> getAllSupplierNames();
+    String getSupplierIdByName(String supplierName);
+
 
 }
