@@ -43,9 +43,20 @@ public class WmsInboundDetailServiceImpl extends ServiceImpl<WmsInboundDetailMap
         updateDetail.setRealQuantity(quantity);
         // 执行更新操作
         wmsInboundDetailMapper.update(updateDetail, updateWrapper);// 仅会更新在实体对象中显式设置的字段。其他字段保持不变
+        // 再查询一下id为ibdId的明细的实际数量 返回到前端
+        QueryWrapper<WmsInboundDetail> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", ibdId);
+        WmsInboundDetail Detail = wmsInboundDetailMapper.selectOne(queryWrapper);
+        Integer updateQuantity = Detail.getRealQuantity();
+
+
         Map<String,Object> data = new HashMap<>(); // 用于打印查询结果信息
-        data.put("修改成功",ibdId);
+        data.put("成功将id为"+ibdId+"的物料明细的实际数量修改为",updateQuantity);
         return data;
+    }
+
+    public void deleteDetailById(String ibdId){
+        wmsInboundDetailMapper.deleteById(ibdId);
     }
 
 
