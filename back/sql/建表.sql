@@ -73,6 +73,32 @@ CREATE TABLE `wms_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+-- mydb.wms_outbound definition
+
+CREATE TABLE `wms_outbound` (
+  `id` varchar(100) NOT NULL,
+  `outbound_no` varchar(100) NOT NULL,
+  `outbound_status` int(11) NOT NULL,
+  `outbound_time` varchar(100) NOT NULL,
+  `client` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- mydb.wms_outbound_detail definition
+
+CREATE TABLE `wms_outbound_detail` (
+  `id` varchar(100) NOT NULL,
+  `outbound_id` varchar(100) NOT NULL,
+  `outbound_no` varchar(100) NOT NULL,
+  `item_no` varchar(100) NOT NULL,
+  `container` int(11) NOT NULL,
+  `plan_quantity` int(11) NOT NULL,
+  `real_quantity` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 -- mydb.wms_supplier definition
 
 CREATE TABLE `wms_supplier` (
