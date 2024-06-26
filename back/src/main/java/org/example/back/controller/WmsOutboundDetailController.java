@@ -29,8 +29,8 @@ public class WmsOutboundDetailController {
 
     @PostMapping("/addRealQuantity")
     public Map<String, Object> addRealQuantity(@RequestParam("obdId") String obdId, @RequestParam("quantity") int quantity){
-        System.out.println(obdId);
-        System.out.println(quantity);
+//        System.out.println(obdId);
+//        System.out.println(quantity);
         return wmsOutboundDetailService.addRealQuantity(obdId,quantity);
 
     }

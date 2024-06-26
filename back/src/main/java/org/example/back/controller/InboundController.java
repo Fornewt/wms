@@ -28,7 +28,7 @@ public class InboundController {
     @GetMapping("/getInbound")
     public List getInbound(){
         List<WmsInbound> inboundList = inboundService.getWmsInbound();
-        System.out.println(inboundList);
+//        System.out.println(inboundList);
         return inboundList;
     }
 }

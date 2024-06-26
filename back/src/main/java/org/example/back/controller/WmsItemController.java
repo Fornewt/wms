@@ -4,6 +4,7 @@ package org.example.back.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.example.back.domain.WmsItem;
+import org.example.back.mapper.WmsItemMapper;
 import org.example.back.service.WmsItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,8 @@ public class WmsItemController {
     @Autowired
     private WmsItemService itemService;
 
+    @Autowired
+    private WmsItemMapper itemMapper;
 //    @ApiOperation(value = "获取所有物料", notes = "返回所有物料的列表")
 //    @GetMapping
 //    public List<WmsItem> getAllItems() {
@@ -60,6 +63,10 @@ public class WmsItemController {
     @GetMapping("/itemsBySupplier")
     public List<WmsItem> getItemsBySupplier(@RequestParam String supplierId) {
         return itemService.getItemsBySupplierId(supplierId);
+    }
+    @GetMapping("/getItems")
+    public List<WmsItem> getItems() {// 返回的是item_no,item_name不重复元组
+        return itemMapper.getItemList();
     }
 }
 
