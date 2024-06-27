@@ -25,6 +25,11 @@ public interface WmsInboundDetailMapper extends BaseMapper<WmsInboundDetail> {
     @Select("SELECT item_no FROM wms_inbound_detail WHERE id = #{ibdId}")
     String getItemNoByibdId(String ibId);// 查询不到默认返回为null
 
+// 根据ibdId获取ibId
+    @Select("SELECT inbound_id FROM wms_inbound_detail WHERE id=#{ibdId}")
+    String getInboundIdByibdId(String ibdId);
+
+
 }
 
 

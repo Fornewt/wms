@@ -9,6 +9,7 @@ import org.example.back.domain.WmsOutboundDetail;
 import org.example.back.mapper.WmsInboundDetailMapper;
 import org.example.back.mapper.WmsInventoryMapper;
 import org.example.back.mapper.WmsOutboundDetailMapper;
+import org.example.back.mapper.WmsOutboundMapper;
 import org.example.back.service.WmsOutboundDetailService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,10 @@ public class WmsOutboundDetailServiceImpl extends ServiceImpl<WmsOutboundDetailM
     private WmsInventoryMapper inventoryMapper;
     @Autowired
     private WmsInventoryMapper wmsInventoryMapper;
+    @Autowired
+    private WmsOutboundMapper wmsOutboundMapper;
+
+
 
     public Map<String, Object> addRealQuantity(String obdId, int quantity){
         Map<String,Object> data = new HashMap<>(); // 用于打印查询结果信息
@@ -77,6 +82,35 @@ public class WmsOutboundDetailServiceImpl extends ServiceImpl<WmsOutboundDetailM
         WmsOutboundDetail Detail = wmsOutboundDetailMapper.selectOne(queryWrapper);
         Integer updateQuantity = Detail.getRealQuantity();
         data.put("成功将id为"+obdId+"的物料明细的实际数量修改为",updateQuantity);
+
+
+        // 每一次出库修改，做一次状态变化
+        // 先根据obdId获取outbound_id
+        String obId = wmsOutboundDetailMapper.getOutboundIdByobdId(obdId);
+        // 获取该obId下的所有明细，并且判断实际数量和计划数量的关系
+        List<WmsOutboundDetail> details = wmsOutboundMapper.getDetailsByobId(obId);
+        // 出库状态 0未出库 1部分出库 2全部出库
+        Boolean isPartlyOutbound = false;// 如果有明细存在实际数量大于0，则置为true
+        Boolean isTotallyOutbound = true;// 如果存在明细的实际数量不等于计划数量，则置为false
+
+        for (WmsOutboundDetail detail : details) {
+            Integer RQ = detail.getRealQuantity();
+            Integer PQ = detail.getPlanQuantity();
+            System.out.println("实际数量"+RQ);
+            if(RQ > 0) isPartlyOutbound = true;
+            if(PQ != RQ) isTotallyOutbound = false;
+        }
+
+        if(isPartlyOutbound == false && isTotallyOutbound == false){
+            wmsOutboundMapper.updateStatus(obId,0);
+        }else if(isPartlyOutbound == true && isTotallyOutbound == false){
+            wmsOutboundMapper.updateStatus(obId,1);
+        }else if(isTotallyOutbound == true && isPartlyOutbound == true){
+            wmsOutboundMapper.updateStatus(obId,2);
+        }
+
+
+
         return data;
     }
     public void deleteDetailById(String obdId){

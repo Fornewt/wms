@@ -25,6 +25,10 @@ public interface WmsOutboundDetailMapper extends BaseMapper<WmsOutboundDetail> {
     @Select("SELECT item_no FROM wms_outbound_detail WHERE id = #{obdId}")
     String getItemNoByobdId(String obdId);
 
+    // 根据obdId获取obId
+    @Select("SELECT outbound_id FROM wms_outbound_detail WHERE id = #{obdId}")
+    String getOutboundIdByobdId(String obdId);
+
 
 
 }
