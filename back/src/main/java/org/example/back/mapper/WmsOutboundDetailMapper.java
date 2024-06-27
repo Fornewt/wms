@@ -19,7 +19,7 @@ public interface WmsOutboundDetailMapper extends BaseMapper<WmsOutboundDetail> {
 
     // 根据明细Id获取实际数量
     @Select("SELECT real_quantity FROM wms_outbound_detail WHERE id = #{obdId}")
-    int getRealQuantityByobdId(String obdId);
+    Integer getRealQuantityByobdId(String obdId);
 
     // 根据明细id获取item_no
     @Select("SELECT item_no FROM wms_outbound_detail WHERE id = #{obdId}")

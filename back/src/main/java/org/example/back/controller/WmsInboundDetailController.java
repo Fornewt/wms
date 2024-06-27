@@ -29,15 +29,12 @@ public class WmsInboundDetailController {
     @PostMapping("/inboundItemsInfo")
     public List<WmsInboundDetail> inboundItemsInfo(@RequestBody WmsInbound wmsInbound){
         String inboundId = wmsInbound.getId();
-        System.out.println(inboundId);
         return wmsInboundDetailService.inboundItemsInfo(inboundId);
 
     }
 
     @PostMapping("/addRealQuantity")
     public Map<String, Object> addRealQuantity(@RequestParam("ibdId") String ibdId,@RequestParam("quantity") int quantity){
-//        System.out.println(ibdId);
-//        System.out.println(quantity);
         return wmsInboundDetailService.addRealQuantity(ibdId,quantity);
 
     }

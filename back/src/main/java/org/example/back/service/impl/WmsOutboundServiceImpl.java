@@ -44,8 +44,8 @@ public class WmsOutboundServiceImpl extends ServiceImpl<WmsOutboundMapper, WmsOu
         Map<String, Object> result = new HashMap<>();
         if(count == 0){
             List<WmsOutboundDetail> details = request.getWmsOutboundDetailList();
-            // 未出库状态为1
-            wmsOutbound.setOutboundStatus(1);
+            // 未出库状态为0
+            wmsOutbound.setOutboundStatus(0);
             // 保存出库单
             wmsOutboundMapper.insert(wmsOutbound);
 
@@ -57,7 +57,7 @@ public class WmsOutboundServiceImpl extends ServiceImpl<WmsOutboundMapper, WmsOu
                 wmsOutboundDetailMapper.insert(detail);
 
             }
-            result.put("出库单保存成功", true);
+            result.put("成功", "创建出库单");
 
         }else{
             result.put("出库单id重复","请重试!");

@@ -29,8 +29,6 @@ public class WmsOutboundDetailController {
 
     @PostMapping("/addRealQuantity")
     public Map<String, Object> addRealQuantity(@RequestParam("obdId") String obdId, @RequestParam("quantity") int quantity){
-//        System.out.println(obdId);
-//        System.out.println(quantity);
         return wmsOutboundDetailService.addRealQuantity(obdId,quantity);
 
     }
@@ -43,7 +41,6 @@ public class WmsOutboundDetailController {
     @PostMapping("/outboundItemsInfo")
     public List<WmsOutboundDetail> OutboundItemsInfo(@RequestBody WmsOutbound wmsOutbound){
         String outboundId = wmsOutbound.getId();
-        System.out.println(outboundId);
         return wmsOutboundDetailService.outboundItemsInfo(outboundId);
 
     }

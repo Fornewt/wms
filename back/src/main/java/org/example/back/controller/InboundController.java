@@ -20,7 +20,7 @@ public class InboundController {
 
     @PostMapping("/inbound")
     public Map<String, Object> storeInboundOrder(@RequestBody InboundReq inboundReq) {
-        System.out.println("Inserting detail: " + inboundReq);
+        System.out.println("新入库订单的详细信息：" + inboundReq);
         return inboundService.storeInboundOrder(inboundReq);
 
     }
@@ -28,7 +28,6 @@ public class InboundController {
     @GetMapping("/getInbound")
     public List getInbound(){
         List<WmsInbound> inboundList = inboundService.getWmsInbound();
-//        System.out.println(inboundList);
         return inboundList;
     }
 }

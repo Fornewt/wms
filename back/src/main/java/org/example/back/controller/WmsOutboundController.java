@@ -29,12 +29,11 @@ public class WmsOutboundController {
     @GetMapping("/getOutbound")
     public List getOutbound(){
         List<WmsOutbound> outboundList = OutboundService.getWmsOutbound();
-        System.out.println(outboundList);
         return outboundList;
     }
     @PostMapping("/outbound")
     public Map<String, Object> storeOutboundOrder(@RequestBody OutboundReq outboundReq) {
-        System.out.println("Inserting detail: " + outboundReq);
+        System.out.println("新出库订单的详细信息：" + outboundReq);
         return OutboundService.storeOutboundOrder(outboundReq);
 
     }

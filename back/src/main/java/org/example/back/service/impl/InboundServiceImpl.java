@@ -72,14 +72,14 @@ public class InboundServiceImpl {
 
                 // 插入新记录
                 wmsInventoryMapper.insert(newInventory);
-                System.out.println("插入新零件编号成功：" + newInventory.getItemNo());
+                System.out.println("插入新的零件编号成功：" + newInventory.getItemNo());
             } else {
                 System.out.println("已存在的零件编号：" + existingInventory.getItemNo());
             }
 
         }
 
-        result.put("成功", "保存入库单");
+        result.put("成功", "创建入库单");
 
         }else{
             result.put("入库单id重复","请重试!");

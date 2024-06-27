@@ -42,32 +42,30 @@ public class WmsOutboundDetailServiceImpl extends ServiceImpl<WmsOutboundDetailM
 
 
     public Map<String, Object> addRealQuantity(String obdId, int quantity){
+        // 分隔线，分隔不同零件
+        System.out.println("--------分隔线---------");
         Map<String,Object> data = new HashMap<>(); // 用于打印查询结果信息
         // 出库实际变化量
         Integer originalRealQuantity = wmsOutboundDetailMapper.getRealQuantityByobdId(obdId);
-        System.out.println("原来的实际数量"+originalRealQuantity);
+        System.out.println("修改前的实际数量"+originalRealQuantity);
         Integer deltaInventory = -(quantity - originalRealQuantity);
-        System.out.println("变化量"+deltaInventory);
-
-//        UpdateWrapper<WmsInventory> updateWrapper1 = new UpdateWrapper<>();
+        System.out.println("对库存的影响(变化量)："+deltaInventory);
         String itemNo = wmsOutboundDetailMapper.getItemNoByobdId(obdId);
-        System.out.println("零件编号为"+itemNo);
+        System.out.println("零件编号为:"+itemNo);
+        Integer inventory = inventoryMapper.getInventoryByItemNo(itemNo);
+        System.out.println("库存剩余量:"+inventory);
 
-        Integer returnNull = inventoryMapper.getInventoryByItemNo(itemNo);
-        System.out.println("库存中存在此编号吗？"+returnNull+"\n");
         // 如果出库的变化量大于库存量或者根本就不存在这种零件编号，应该阻止！ 并且直接返回
-        if(inventoryMapper.getInventoryByItemNo(itemNo) == null || -deltaInventory > inventoryMapper.getInventoryByItemNo(itemNo)){
-            data.put("库存不足",obdId);
-            data.put("该编号零件剩余",inventoryMapper.getInventoryByItemNo(itemNo));
-//            data.put("obdId为",obdId);
+        if(inventory == null || -deltaInventory > inventory){
+            data.put("此零件库存不足",obdId);
+            data.put("库存剩余量",inventory);
             return data;
         }
+
         // 修改库存中的inventory
         wmsInventoryMapper.updateInventoryByItemNo(deltaInventory,itemNo);
-        data.put("成功出库",obdId);
+        data.put("此零件出库成功",obdId);
 
-//        updateWrapper1.eq("item_no", itemNo).set("inventory", "inventory + " + deltaInventory);;
-//        inventoryService.update(updateWrapper1);
 
         // 接下来更新明细
         UpdateWrapper<WmsOutboundDetail> updateWrapper = new UpdateWrapper<>();
@@ -77,39 +75,39 @@ public class WmsOutboundDetailServiceImpl extends ServiceImpl<WmsOutboundDetailM
         // 执行更新操作
         wmsOutboundDetailMapper.update(updateDetail, updateWrapper);// 仅会更新在实体对象中显式设置的字段。其他字段保持不变
         // 查询id为obdId的明细的实际数量 返回到前端
-        QueryWrapper<WmsOutboundDetail> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("id", obdId);
-        WmsOutboundDetail Detail = wmsOutboundDetailMapper.selectOne(queryWrapper);
-        Integer updateQuantity = Detail.getRealQuantity();
-        data.put("成功将id为"+obdId+"的物料明细的实际数量修改为",updateQuantity);
+//        QueryWrapper<WmsOutboundDetail> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.eq("id", obdId);
+//        WmsOutboundDetail Detail = wmsOutboundDetailMapper.selectOne(queryWrapper);
+//        Integer updateQuantity = Detail.getRealQuantity();
+//        data.put("成功将id为"+obdId+"的物料明细的实际数量修改为",updateQuantity);
 
 
         // 每一次出库修改，做一次状态变化
         // 先根据obdId获取outbound_id
         String obId = wmsOutboundDetailMapper.getOutboundIdByobdId(obdId);
-        // 获取该obId下的所有明细，并且判断实际数量和计划数量的关系
+        System.out.println("属于出库单:"+obdId);
+        // 获取该obId下的所有明细，并且判断实际数量和计划数量的大小关系
         List<WmsOutboundDetail> details = wmsOutboundMapper.getDetailsByobId(obId);
         // 出库状态 0未出库 1部分出库 2全部出库
-        Boolean isPartlyOutbound = false;// 如果有明细存在实际数量大于0，则置为true
-        Boolean isTotallyOutbound = true;// 如果存在明细的实际数量不等于计划数量，则置为false
+        boolean isPartlyOutbound = false;// 如果有明细存在实际数量大于0，则置为true
+        boolean isTotallyOutbound = true;// 如果存在明细的实际数量不等于计划数量，则置为false
 
         for (WmsOutboundDetail detail : details) {
-            Integer RQ = detail.getRealQuantity();
-            Integer PQ = detail.getPlanQuantity();
-            System.out.println("实际数量"+RQ);
+            int RQ = detail.getRealQuantity();
+            int PQ = detail.getPlanQuantity();
             if(RQ > 0) isPartlyOutbound = true;
             if(PQ != RQ) isTotallyOutbound = false;
         }
 
-        if(isPartlyOutbound == false && isTotallyOutbound == false){
+        System.out.println("是否部分出库"+isPartlyOutbound+"是否完全出库"+isTotallyOutbound+"\n");
+
+        if(!isPartlyOutbound && !isTotallyOutbound){
             wmsOutboundMapper.updateStatus(obId,0);
-        }else if(isPartlyOutbound == true && isTotallyOutbound == false){
+        }else if(isPartlyOutbound && !isTotallyOutbound){
             wmsOutboundMapper.updateStatus(obId,1);
-        }else if(isTotallyOutbound == true && isPartlyOutbound == true){
+        }else if(isTotallyOutbound && isPartlyOutbound){
             wmsOutboundMapper.updateStatus(obId,2);
         }
-
-
 
         return data;
     }
