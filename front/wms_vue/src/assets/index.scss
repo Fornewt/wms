@@ -1,0 +1,285 @@
+// 定义颜色
+$main-color: #333333;
+$content-color: #606266;
+$tips-color: #909399;
+$border-color: #e4e7ed;
+
+html,
+body {
+  font-family: Helvetica Neue, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  color: $main-color;
+}
+
+html, body, div, ul, li, dl, dt, dd, button, table, tbody, thead, tfoot, tr, td, th,
+input, textarea, nav, header, footer, menu, section, aside, article, details, form, h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  &::after {
+    box-sizing: border-box;
+  }
+
+  &::before {
+    box-sizing: border-box;
+  }
+}
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+div:focus {
+  outline: none;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.ai-center {
+  align-items: center;
+}
+
+.ai-start {
+  align-items: flex-start;
+}
+
+.ai-end {
+  align-items: flex-end;
+}
+
+.jc-center {
+  justify-content: center;
+}
+
+.jc-start {
+  justify-content: flex-start;
+}
+
+.jc-end {
+  justify-content: flex-end;
+}
+
+.jc-between {
+  justify-content: space-between;
+}
+
+.jc-around {
+  justify-content: space-around;
+}
+
+.flex-elps {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: break-all;
+  width: 0;
+}
+
+.fr {
+  float: right;
+}
+
+.fl {
+  float: left;
+}
+
+// 卡片样式
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.08);
+  padding: 10px 0 27px;
+  overflow: hidden;
+
+  & .card-header {
+    display: flex;
+    padding: 0 14px 10px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $border-color;
+
+    & .header-title {
+      font-size: 16px;
+    }
+
+    & .header-other {
+      font-size: 14px;
+      color: #409eff;
+    }
+  }
+
+  & .card-content {
+    padding: 8px 14px 0;
+  }
+}
+
+// 遮罩层 默认 fixed 定位如果需根据父元素大小加上 abso 即可
+.mask-wrapper {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.45);
+}
+
+// 垂直水平居中
+.pos-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// 边框
+.border {
+  border: 1px solid $border-color;
+
+  @each $short, $long in l left, t top, r right, b bottom {
+    // 缩写版，结果如： border-l
+    &-#{$short} {
+      border-#{$long}: 1px solid $border-color;
+    }
+  }
+}
+
+// 框的类型
+@each $short, $long in i inline, b block, ib inline-block {
+  .ds-#{$short} {
+    display: $long;
+  }
+}
+
+// 定位类型
+@each $short, $long in rela relative, abso absolute, fixed fixed {
+  .#{$short} {
+    position: $long;
+  }
+}
+
+// 文字对齐方式
+@each $k in left, center, right {
+  .text-#{$k} {
+    text-align: $k;
+  }
+}
+
+// 定义字体(px)单位，大于或等于12的都为px单位字体
+@each $i in (12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50) {
+  .fs-#{$i} {
+    font-size: $i + px;
+  }
+}
+
+// 定义文字行数
+@for $i from 1 through 3 {
+  .text-wrap-#{$i} {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-clamp: $i;
+    word-break: break-all;
+    -webkit-line-clamp: $i;
+    -webkit-box-orient: vertical;
+  }
+}
+
+// 定义flex等分
+@for $i from 0 through 12 {
+  .flex-#{$i} {
+    flex: $i;
+  }
+}
+
+// 定义内外边距，历遍0-80
+@each $i in (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80) {
+  // 得出：margin-30或者m-30
+  .m-#{$i} {
+    margin: $i + px;
+  }
+
+  .my-#{$i} {
+    margin-top: $i + px;
+    margin-bottom: $i + px;
+  }
+
+  .mx-#{$i} {
+    margin-left: $i + px;
+    margin-right: $i + px;
+  }
+
+  // 得出：padding-30或者p-30
+  .p-#{$i} {
+    padding: $i + px;
+  }
+
+  .py-#{$i} {
+    padding-top: $i + px;
+    padding-bottom: $i + px;
+  }
+
+  .px-#{$i} {
+    padding-left: $i + px;
+    padding-right: $i + px;
+  }
+
+  @each $short, $long in l left, t top, r right, b bottom {
+    // 缩写版，结果如： m-l-30
+    // 定义外边距
+    .m#{$short}-#{$i} {
+      margin-#{$long}: $i + px;
+    }
+
+    // 定义内边距
+    .p#{$short}-#{$i} {
+      padding-#{$long}: $i + px;
+    }
+
+    // bottom left rigth top
+    .#{$short}-#{$i} {
+      #{$long}: $i + px;
+    }
+  }
+}

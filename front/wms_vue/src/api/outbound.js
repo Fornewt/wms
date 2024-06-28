@@ -1,0 +1,156 @@
+import axios from "axios";
+
+//const API_BASE_URL = "http://localhost:8000";
+//const API_BASE_URL = "http://192.168.43.128:8000";
+const API_BASE_URL = "http://192.168.136.86:8000";
+//const API_BASE_URL ="https://e1797793-87d4-4690-b69a-a91ae37d8a0e.mock.pstmn.io";
+
+export const getOutboundList = () => {
+  return axios.get(`${API_BASE_URL}/wmsOutbound/getOutbound`);
+};
+
+// export const getclientNames = () => {
+//   return axios.get(`${API_BASE_URL}/wmsclient/getclientName`);
+// };
+
+export const deleteOutboundItem = (id) => {
+  return axios.delete(
+    `${API_BASE_URL}/wmsOutbound/deleteOutboundById?id=${id}`
+  );
+};
+
+export const fetchPartsByid = (id) => {
+  return axios.post(`${API_BASE_URL}/wmsOutboundDetail/outboundItemsInfo`, {
+    id,
+  });
+};
+export const saveform2 = (singleDetail) => {
+  return axios.post(
+    `${API_BASE_URL}/wmsOutboundDetail/addRealQuantity?obdId=${singleDetail.id}&quantity=${singleDetail.realQuantity}`
+  );
+};
+
+export const getOutboundItemOutfo = (id) => {
+  return axios.post(`${API_BASE_URL}/wmsOutboundDetail/outboundItemsInfo`, {
+    id,
+  });
+};
+
+export const saveOrUpdateItem = async (item) => {
+  try {
+    console.log("SendOutg item:", item);
+    const response = await axios.post(`${API_BASE_URL}/api/items`, item);
+    return response.data;
+  } catch (error) {
+    console.error("Error savOutg or updatOutg item:", error);
+    throw error; // 重新抛出错误，以便调用方处理
+  }
+};
+
+export const fetchItems = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/wmsItem`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching items:", error);
+    throw error; // 重新抛出错误，以便调用方处理
+  }
+};
+
+export const fetchItemById = async (id) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/wmsItem/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching item by ID:", error);
+    throw error; // 重新抛出错误，以便调用方处理
+  }
+};
+export const getItemsBySupplier = async (supplierId) => {
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}/wmsItem/itemsBySupplier?supplierId=${supplierId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching item by ID:", error);
+    throw error; // 重新抛出错误，以便调用方处理
+  }
+};
+// 此处获取的是物料编号不重复的所有items
+export const getItems = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/wmsItem/getItems`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching item by ID:", error);
+    throw error; // 重新抛出错误，以便调用方处理
+  }
+};
+
+export const getBox1 = async (formData) => {
+  try {
+    console.log("SavOutg form data:", formData);
+    const response = await axios.get(
+      `${API_BASE_URL}/wmsContainer/containerCount`,
+      {
+        params: formData,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error savOutg form data:", error);
+    throw error;
+  }
+};
+
+export const getNames1 = async (formData) => {
+  try {
+    console.log("SavOutg form data:", formData);
+    const response = await axios.get(
+      `${API_BASE_URL}/wmsclient/names`,
+      formData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error savOutg form data:", error);
+    throw error; // 重新抛出错误，以便调用方处理
+  }
+};
+
+export const getclientIdByName1 = async (clientName) => {
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}/wmsclient/idByName?clientName=${clientName}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetchOutg client ID by name:", error);
+    throw error;
+  }
+};
+
+export const getSupplierIdByName = async (supplierName) => {
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}/wmsSupplier/idByName?supplierName=${supplierName}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching supplier ID by name:", error);
+    throw error;
+  }
+};
+
+export const saveForm1 = async (formData) => {
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/wmsOutbound/outbound`,
+      formData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error Out save", error);
+    throw error;
+  }
+};
